@@ -1,0 +1,57 @@
+/*
+Alterador de Status do Bot Discord [ BRICE ]
+Este alterador de status do bot Discord é uma aplicação JavaScript simples que permite alterar o status de presença do seu bot no Discord. Você pode personalizar o status do seu bot para exibir uma mensagem específica ou mostrar que ele está jogando um jogo específico.
+
+Uso:
+1. Clone ou baixe este repositório para sua máquina local ou faça um fork dele.
+2. Instale as dependências necessárias usando npm ou yarn:
+
+   npm install
+
+3. Adicione o token do seu bot Discord no arquivo secrets.env.
+*/
+
+const { Client, Intents, ActivityType } = require('discord.js');
+require('dotenv').config();
+
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES
+  ]
+});
+
+const statusMessages = [
+  "Mensagem de status personalizada",
+  "Jogando um jogo"
+];
+
+async function login() {
+  try {
+    await client.login(process.env.DISCORD_TOKEN);
+    console.log(`Conectado como ${client.user.tag}`);
+    startStatusUpdateLoop();
+  } catch (error) {
+    console.error('Falha ao conectar:', error);
+    process.exit(1);
+  }
+}
+
+function startStatusUpdateLoop() {
+  updateStatusAndSendMessages();
+  setInterval(updateStatusAndSendMessages, 10000); // Atualiza a cada 10 segundos
+}
+
+function updateStatusAndSendMessages() {
+  const currentStatus = statusMessages[Math.floor(Math.random() * statusMessages.length)];
+
+  client.user.setPresence({
+    activities: [{ name: currentStatus, type: ActivityType.PLAYING }],
+    status: 'online'
+  });
+}
+
+client.once('ready', () => {
+  console.log(`Conectado como ${client.user.tag}`);
+  login();
+});
