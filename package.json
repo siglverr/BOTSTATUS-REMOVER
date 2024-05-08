@@ -1,0 +1,21 @@
+{
+  "name": "👑 BOT GHOST STATUS REMOVER BRICE",
+  "version": "1.0.0",
+  "description": "Simple Discord bot status changer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "status"
+  ],
+  "author": "BRICE",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2"
+  }
+}
